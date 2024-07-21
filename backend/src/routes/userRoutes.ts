@@ -1,20 +1,20 @@
 import {
-   forgotPassword,
-   protect,
-   resetPassword,
-   signin,
-   restrictTo,
-   signup,
-   updatePassword,
+  forgotPassword,
+  protect,
+  resetPassword,
+  signin,
+  restrictTo,
+  signup,
+  updatePassword,
 } from "../controllers/authController";
 import {
-   DelMyUser,
-   deleteUser,
-   getMe,
-   getUser,
-   getUsers,
-   updateMyUser,
-   updateUser,
+  DelMyUser,
+  deleteUser,
+  getMe,
+  getUser,
+  getUsers,
+  updateMyUser,
+  updateUser,
 } from "../controllers/userController";
 import express from "express";
 import { Role } from "../types";
@@ -32,9 +32,9 @@ userRouter.post("/forgotpassword", forgotPassword);
 userRouter.patch("/resetpassword/:token", resetPassword);
 
 userRouter
-   .route("/:id")
-   .patch(protect, restrictTo(Role.Admin), updateUser)
-   .delete(protect, restrictTo(Role.Admin), deleteUser)
-   .get(protect, restrictTo(Role.Admin), getUser);
+  .route("/:id")
+  .patch(protect, restrictTo(Role.Admin), updateUser)
+  .delete(protect, restrictTo(Role.Admin), deleteUser)
+  .get(protect, restrictTo(Role.Admin), getUser);
 
 export default userRouter;
