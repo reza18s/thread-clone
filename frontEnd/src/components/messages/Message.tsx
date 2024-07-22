@@ -1,10 +1,10 @@
-import { useAuthContext } from "@/Context/AuthContext";
-import useGetConversations from "@/Hooks/getConversation";
-import { MessageType } from "@/zustand/UseConversations";
+import { useAuthContext } from "../../context/AuthContext";
+import { extractTime } from "../../utils/extractTime";
+import useConversation, { MessageType } from "../../zustand/useConversation";
 
 const Message = ({ message }: { message: MessageType }) => {
   const { authUser } = useAuthContext();
-  const {} = useGetConversations();
+  const { selectedConversation } = useConversation();
 
   const fromMe = message?.senderId === authUser?.id;
   const img = fromMe ? authUser?.profilePic : selectedConversation?.profilePic;

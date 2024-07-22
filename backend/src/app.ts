@@ -8,13 +8,16 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookiesParser from "cookie-parser";
 import messageRoutes from "./routes/messageRoutes";
+import path from "path";
 
 const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "http://localhost:5173/",
     credentials: true,
+
+    optionsSuccessStatus: 200,
   }),
 );
 // app.use(express.json());
@@ -39,7 +42,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 app.use(helmet());
 app.use(xssFilter());
-app.use(express.static(`${__dirname}/public`));
+if (process.env.NODE_ENV !== "development") {
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  });
+}
 
 // // // 3) ROUTES
 app.use("/api/v1/message", messageRoutes);

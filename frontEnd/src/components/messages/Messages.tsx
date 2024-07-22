@@ -1,15 +1,13 @@
-import React from "react";
+import useChatScroll from "../../hooks/useChatScroll";
+import useGetMessages from "../../hooks/useGetMessages";
+import useListenMessages from "../../hooks/useListenMessages";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 import Message from "./Message";
-import useGetMessages from "@/Hooks/useGetMessage";
-import useListenMessages from "@/Hooks/useLinstenMessage";
-import useChatScroll from "@/Hooks/useChatScroll";
 
 const Messages = () => {
   const { loading, messages } = useGetMessages();
   useListenMessages();
 
-  // eslint-disable-next-line no-undef
   const ref = useChatScroll(messages) as React.MutableRefObject<HTMLDivElement>;
 
   return (
