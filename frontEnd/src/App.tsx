@@ -1,17 +1,24 @@
 import { Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "./Provider/themeProvider";
-import AppLayout from "./pages/AppLayout";
-import UserPage from "./pages/UserPage";
+import Home from "./pages/Home";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import { Toaster } from "react-hot-toast";
+import { useAuthContext } from "./Context/AuthContext";
 
 function App() {
+  const { isLoading } = useAuthContext();
+
+  if (isLoading) return null;
+
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <div className="flex h-screen items-center justify-center p-4">
       <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route path="/:username" element={<UserPage></UserPage>} />
-        </Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
-    </ThemeProvider>
+      <Toaster />
+    </div>
   );
 }
 

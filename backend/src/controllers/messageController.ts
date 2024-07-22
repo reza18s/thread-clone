@@ -3,6 +3,7 @@ import Conversation from "../Models/conversationModel";
 import { catchAsync } from "../util/catchAsync";
 import { IRequest } from "../types";
 import { Message } from "../Models/messageModel";
+import { User } from "../Models/userModel";
 
 export const sendMessage = catchAsync(async (req: IRequest, res: Response) => {
   const { message } = req.body;
@@ -43,3 +44,13 @@ export const getMessage = catchAsync(async (req: IRequest, res: Response) => {
   const { messages } = conversation;
   res.status(200).json({ status: "success", messages });
 });
+export const getUserConversations = catchAsync(
+  async (req: IRequest, res: Response) => {
+    const senderId = req.user._id;
+    const filteredUsers = await User.find({ _id: { $ne: senderId } }).select(
+      "-password",
+    );
+
+    return res.status(200).json({ status: "success", filteredUsers });
+  },
+);
